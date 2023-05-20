@@ -1,36 +1,46 @@
 using UnityEngine;
 using Mirror;
 
-public class GrenadeExplosion : MonoBehaviour
+public class ExplosionController : MonoBehaviour
 {
     [SerializeField] private GameObject explosionEffect;
     [SerializeField] private float delay;
     [SerializeField] private float explosionForce;
     [SerializeField] private float explosionRadius;
 
-    private float countdown;
+    [SerializeField] private bool isGasCylinder;
+    [SerializeField] private bool isGrenade;
+
+    public bool isCanExplosion;
+
     private bool hasExplosion;
 
     private void Start()
     {
-        countdown = delay;
         hasExplosion = false;
     }
 
     private void Update()
     {
-        countdown -= Time.deltaTime;
+        if(isCanExplosion)
+            delay -= Time.deltaTime;
 
-        if(countdown <= 0 && !hasExplosion)
+        if(delay <= 0 && !hasExplosion && isGrenade)
         {
-            Explode();
+            ExplodeGrenade();
+            hasExplosion = true;
+        }
+
+        if(delay <= 0 && !hasExplosion && isGasCylinder)
+        {
+            ExplodeGrenade();
             hasExplosion = true;
         }
     }
 
-    private void Explode()
+    private void ExplodeGrenade()
     {
-        GameObject grenade = Instantiate(explosionEffect, transform.position, transform.rotation);
+        Instantiate(explosionEffect, transform.position, transform.rotation);
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
 

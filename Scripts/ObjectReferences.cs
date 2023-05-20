@@ -15,6 +15,7 @@ public class ObjectReferences : MonoBehaviour
 
     [Header("Object")]
     public GameObject grenade;
+    public GameObject flame;
 
     public GameObject[] respawnPoint;
 

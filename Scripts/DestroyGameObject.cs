@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class DestroyEffects : MonoBehaviour
+public class DestroyGameObject : MonoBehaviour
 {
     [SerializeField] private float time;
 

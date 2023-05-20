@@ -28,7 +28,7 @@ public class GrenadeController : NetworkBehaviour
         if(Input.GetKeyDown(KeyCode.G) && readyToTwow && totalThrows > 0)
         {
             if(playerCamera != null && attactPoint != null)
-                playerNetwork.CmdSpawn(attactPoint.position, Quaternion.identity);
+                playerNetwork.CmdSpawnGrenade(attactPoint.position, Quaternion.identity);
         }
     }
 

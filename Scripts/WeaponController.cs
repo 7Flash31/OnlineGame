@@ -106,6 +106,11 @@ public class WeaponController : MonoBehaviour
                 hitObject = "Player";
             } 
 
+            if(hit.transform.gameObject.tag == "GasCylinder" && hit.collider.TryGetComponent<ExplosionController>(out var explosionController))
+            {
+                explosionController.isCanExplosion = true;
+            } 
+
             if(hit.transform.gameObject.tag == "Concrete")
                 hitObject = "Concrete";
 
@@ -117,6 +122,9 @@ public class WeaponController : MonoBehaviour
 
             if(hit.transform.gameObject.tag == "Sand")
                 hitObject = "Sand";
+
+            if(hit.transform.gameObject.tag == "GasCylinder")
+                hitObject = "GasCylinder";
 
             playerNetwork.CmdSetImpact(hit.point, Quaternion.LookRotation(hit.normal), hitObject);
             //playerNetwork.CmdSetMuzzle(muzzleFlashSpawn.transform.position, Quaternion.identity, muzzleFlashSpawn.transform);

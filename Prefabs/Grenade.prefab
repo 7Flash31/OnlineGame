@@ -135,6 +135,9 @@ MonoBehaviour:
   delay: 3
   explosionForce: 500
   explosionRadius: 3
+  isGasCylinder: 0
+  isGrenade: 1
+  isCanExplosion: 0
 --- !u!114 &6182904453993452800
 MonoBehaviour:
   m_ObjectHideFlags: 0

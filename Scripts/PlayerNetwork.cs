@@ -161,12 +161,19 @@ public class PlayerNetwork : NetworkBehaviour
             GameObject impact = Instantiate(ObjectReferences.instance.impactSand, position, rotation);
             NetworkServer.Spawn(impact);
         }
+
+        if(hitObject == "GasCylinder")
+        {
+            GameObject impact = Instantiate(ObjectReferences.instance.flame, position, rotation);
+            NetworkServer.Spawn(impact);
+        }
     }
 
     [Command]
-    public void CmdSpawn(Vector3 position, Quaternion rotation)
+    public void CmdSpawnGrenade(Vector3 position, Quaternion rotation)
     {
         GameObject grenade = Instantiate(ObjectReferences.instance.grenade, position, rotation);
+        grenade.GetComponent<ExplosionController>().isCanExplosion = true;
         NetworkServer.Spawn(grenade);
         grenadeController.Throw(grenade);
     }

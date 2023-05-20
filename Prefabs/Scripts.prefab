@@ -55,3 +55,5 @@ MonoBehaviour:
   impactBlood: {fileID: 1000013355911406, guid: 5a337999db512e14b904c983eeaa8f9c,
     type: 3}
   grenade: {fileID: 3820221621688271211, guid: 80b35aed73e363d4d946e3664dbd47e3, type: 3}
+  flame: {fileID: 7486306289979032126, guid: 597540eb045e4c242aee7279032d2e62, type: 3}
+  respawnPoint: []
