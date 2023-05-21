@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
-using Mirror.Experimental;
 
 public class WeaponController : MonoBehaviour
 {
@@ -42,9 +41,7 @@ public class WeaponController : MonoBehaviour
     }
 
     private void Update()
-    {
-        Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.forward * range, Color.red);
-        
+    {        
         ammoText.text = currentAmmo + "/" + maxAmmo;
 
         if(currentAmmo > 0)
@@ -114,16 +111,16 @@ public class WeaponController : MonoBehaviour
             if(hit.transform.gameObject.tag == "Concrete")
                 hitObject = "Concrete";
 
-            if(hit.transform.gameObject.tag == "Metal")
+            else if(hit.transform.gameObject.tag == "Metal")
                 hitObject = "Metal";
 
-            if(hit.transform.gameObject.tag == "Wood")
+            else if(hit.transform.gameObject.tag == "Wood")
                 hitObject = "Wood";
 
-            if(hit.transform.gameObject.tag == "Sand")
+            else if(hit.transform.gameObject.tag == "Sand")
                 hitObject = "Sand";
 
-            if(hit.transform.gameObject.tag == "GasCylinder")
+            else if(hit.transform.gameObject.tag == "GasCylinder")
                 hitObject = "GasCylinder";
 
             playerNetwork.CmdSetImpact(hit.point, Quaternion.LookRotation(hit.normal), hitObject);

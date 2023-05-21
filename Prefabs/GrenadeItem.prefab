@@ -12,13 +12,12 @@ GameObject:
   - component: {fileID: 711617578379793524}
   - component: {fileID: 3316016169647907006}
   - component: {fileID: 7119088536295168702}
-  - component: {fileID: 5054584604807196462}
-  - component: {fileID: 1975440582761113068}
-  - component: {fileID: 6182904453993452800}
-  - component: {fileID: -1269076342382152972}
-  - component: {fileID: 4894018195752383412}
+  - component: {fileID: 2451607410406904182}
+  - component: {fileID: 471749063459122683}
+  - component: {fileID: 8348563742322286110}
+  - component: {fileID: 680947057515271947}
   m_Layer: 0
-  m_Name: Grenade
+  m_Name: GrenadeItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -105,8 +104,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &5054584604807196462
-SphereCollider:
+--- !u!64 &2451607410406904182
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -115,47 +114,11 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.043563318
-  m_Center: {x: -0.0009843186, y: -0.0000000018626451, z: 0.043987747}
---- !u!114 &1975440582761113068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3820221621688271211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29a5a2a06f281fa45b7be9c4cbf16b1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosionEffect: {fileID: 1579156726105326786, guid: 625ddd49ccb08bf4e94114352d136d58,
-    type: 3}
-  delay: 3
-  explosionForce: 500
-  explosionRadius: 3
-  isGasCylinder: 0
-  isGrenade: 1
-  isCanExplosion: 0
---- !u!114 &6182904453993452800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3820221621688271211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  _assetId: 1724109466
-  serverOnly: 0
-  visible: 0
-  hasSpawned: 0
---- !u!114 &-1269076342382152972
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6247838392360341801, guid: 1ea910745cf25254ba8c360b884ae65d, type: 3}
+--- !u!114 &471749063459122683
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -189,7 +152,7 @@ MonoBehaviour:
   positionPrecision: 0.01
   scalePrecision: 0.01
   timelineOffset: 0
---- !u!114 &4894018195752383412
+--- !u!114 &8348563742322286110
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -198,17 +161,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 3820221621688271211}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83392ae5c1b731446909f252fd494ae4, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 1
-  syncMode: 0
-  syncInterval: 0
-  target: {fileID: 7119088536295168702}
-  clientAuthority: 0
-  syncVelocity: 1
-  clearVelocity: 0
-  velocitySensitivity: 0.1
-  syncAngularVelocity: 1
-  clearAngularVelocity: 0
-  angularVelocitySensitivity: 0.1
+  sceneId: 0
+  _assetId: 3952787896
+  serverOnly: 0
+  visible: 0
+  hasSpawned: 0
+--- !u!114 &680947057515271947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3820221621688271211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0457cc2d14dafe94c8f5bf0860e063bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrenade: 1
+  isMedicalKit: 0

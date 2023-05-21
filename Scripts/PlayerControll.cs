@@ -196,6 +196,7 @@ public class PlayerControll : NetworkBehaviour
             playerCamera.transform.localPosition = new Vector3(0, 0.134f, 0);
             Debug.Log(1);
         }
+
         else
         {
             animMesh.SetBool("IsCrouching", false);
@@ -206,6 +207,8 @@ public class PlayerControll : NetworkBehaviour
             playerCamera.transform.localPosition = new Vector3(0, 0.4f, 0);
             Debug.Log(2);
         }
+
+
     }
 
     private void Run()
@@ -236,6 +239,7 @@ public class PlayerControll : NetworkBehaviour
 
         currentSpeed = Mathf.Lerp(currentSpeed, walkSpeed, Time.deltaTime * 3);
     }
+
 
     //public IEnumerator SetBlood()
     //{

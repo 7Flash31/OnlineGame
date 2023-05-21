@@ -3978,7 +3978,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3150398879309606883}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.4, z: 0.2}
+  m_LocalPosition: {x: 0, y: 0.4846, z: 0.179}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4098,6 +4098,7 @@ GameObject:
   - component: {fileID: 3150398879416678397}
   - component: {fileID: 3150398879416678394}
   - component: {fileID: 7893686916238052181}
+  - component: {fileID: -3540542717721256393}
   - component: {fileID: 4630277512876490879}
   - component: {fileID: 3150398879416678399}
   - component: {fileID: -4399552863031498064}
@@ -4219,6 +4220,7 @@ MonoBehaviour:
   grenade: {fileID: 3820221621688271211, guid: 80b35aed73e363d4d946e3664dbd47e3, type: 3}
   clientComp:
   - {fileID: 3150398879416678394}
+  - {fileID: -3540542717721256393}
   client:
   - {fileID: 3150398879309606883}
   - {fileID: 3150398879678683908}
@@ -4232,6 +4234,24 @@ MonoBehaviour:
   - {fileID: 6187284327665266499}
   randomRespawn: 1
   pointRespawn: 0
+--- !u!114 &-3540542717721256393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3150398879416678393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9a869a1132c7174fbcbbc369e9800e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 3150398879309606883}
+  playerNetwork: {fileID: 7893686916238052181}
+  playerControll: {fileID: 3150398879416678394}
+  range: 2
+  grenadeCount: 0
+  medicalKitCount: 0
 --- !u!114 &4630277512876490879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4251,7 +4271,7 @@ MonoBehaviour:
   attactPoint: {fileID: 4967798453789055252}
   grenade: {fileID: 3820221621688271211, guid: 80b35aed73e363d4d946e3664dbd47e3, type: 3}
   playerNetwork: {fileID: 7893686916238052181}
-  totalThrows: 100
+  inventoryController: {fileID: -3540542717721256393}
   throwCooldown: 0.1
   throwForce: 15
   throwUpwardForce: 0

@@ -7,9 +7,9 @@ public class GrenadeController : NetworkBehaviour
     [SerializeField] private Transform attactPoint;
     [SerializeField] private GameObject grenade;
     [SerializeField] private PlayerNetwork playerNetwork;
+    [SerializeField] private InventoryController inventoryController;
 
     [Header("Settings")]
-    [SerializeField] private int totalThrows;
     [SerializeField] private float throwCooldown;
 
     [Header("Settings")]
@@ -21,11 +21,12 @@ public class GrenadeController : NetworkBehaviour
     private void Start()
     {
         readyToTwow = true;
+        inventoryController = GetComponent<InventoryController>();
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.G) && readyToTwow && totalThrows > 0)
+        if(Input.GetKeyDown(KeyCode.G) && readyToTwow && inventoryController.grenadeCount > 0)
         {
             if(playerCamera != null && attactPoint != null)
                 playerNetwork.CmdSpawnGrenade(attactPoint.position, Quaternion.identity);
@@ -42,7 +43,7 @@ public class GrenadeController : NetworkBehaviour
         Vector3 forceToAdd = transform.forward * throwForce + transform.up * throwUpwardForce;
         rb.AddForce(forceToAdd, ForceMode.Impulse);
 
-        totalThrows--;
+        inventoryController.grenadeCount--;
 
         Invoke(nameof(ResetThrow), throwCooldown);
     }

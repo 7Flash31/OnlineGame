@@ -71,6 +71,18 @@ public class PlayerNetwork : NetworkBehaviour
         playerControll.playerHealth -= damage;
     }
 
+    [Command(requiresAuthority = false)]
+    public void CmdRestoreHealth(int amount)
+    {
+        RpcRestoreHealth(amount);
+    }
+
+    [ClientRpc]
+    private void RpcRestoreHealth(int amount)
+    {
+        playerControll.playerHealth += amount;
+    }
+
     //Respawn
 
     [Command(requiresAuthority = false)]
@@ -128,6 +140,8 @@ public class PlayerNetwork : NetworkBehaviour
     {
         playerControll.kills++;
     }
+
+    //
 
     [Command]
     public void CmdSetImpact(Vector3 position, Quaternion rotation, string hitObject)
