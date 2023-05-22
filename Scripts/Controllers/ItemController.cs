@@ -5,6 +5,7 @@ public class ItemController : NetworkBehaviour
 {
     [SerializeField] private bool isGrenade;
     [SerializeField] private bool isMedicalKit;
+    [SerializeField] private bool isGasMask;
 
     public void Item(InventoryController inventoryController)
     {
@@ -15,6 +16,12 @@ public class ItemController : NetworkBehaviour
         }
 
         else if(isMedicalKit)
+        {
+            inventoryController.medicalKitCount++;
+            CmdDestroyItem();
+        }
+
+        else if(isGasMask)
         {
             inventoryController.medicalKitCount++;
             CmdDestroyItem();

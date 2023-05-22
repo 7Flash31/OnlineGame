@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using Mirror;
-using Unity.Burst.CompilerServices;
 
 public class PlayerNetwork : NetworkBehaviour
 {

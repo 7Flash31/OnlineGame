@@ -6,7 +6,7 @@ using TMPro;
 public class PlayerControll : NetworkBehaviour
 {
     [Header("Weapon")]
-    [SerializeField] private GameObject saiga;
+    [SerializeField] private GameObject automaton; 
     [SerializeField] private GameObject pistol;
     [SerializeField] private GameObject bulletSpawnS;
     [SerializeField] private GameObject bulletSpawnP;
@@ -56,7 +56,7 @@ public class PlayerControll : NetworkBehaviour
 
         characterController = GetComponent<CharacterController>();
         playerCollider = GetComponent<CapsuleCollider>();
-        weaponControllerS = saiga.GetComponent<WeaponController>();
+        weaponControllerS = automaton.GetComponent<WeaponController>();
         weaponControllerP = pistol.GetComponent<WeaponController>();
     }
 
@@ -91,15 +91,15 @@ public class PlayerControll : NetworkBehaviour
                 }
             }
 
-            if(saiga.activeSelf)
+            if(automaton.activeSelf)
             {
-                saiga.SetActive(false);
+                automaton.SetActive(false);
                 pistol.SetActive(true);
                 return;
             }
             if(pistol.activeSelf)
             {
-                saiga.SetActive(true);
+                automaton.SetActive(true);
                 pistol.SetActive(false);
                 return;
             }
@@ -116,15 +116,15 @@ public class PlayerControll : NetworkBehaviour
                 }
             }
 
-            if(saiga.activeSelf)
+            if(automaton.activeSelf)
             {
-                saiga.SetActive(false);
+                automaton.SetActive(false);
                 pistol.SetActive(true);
                 return;
             }
             if(pistol.activeSelf)
             {
-                saiga.SetActive(true);
+                automaton.SetActive(true);
                 pistol.SetActive(false);
                 return;
             }
@@ -205,7 +205,6 @@ public class PlayerControll : NetworkBehaviour
             playerCollider.height = 1.5f;
             playerCollider.center = new Vector3(0, -0.2f, 0);
             playerCamera.transform.localPosition = new Vector3(0, 0.4f, 0);
-            Debug.Log(2);
         }
 
 

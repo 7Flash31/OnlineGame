@@ -6,7 +6,6 @@ public class WeaponController : MonoBehaviour
 {
     [Header("ObjectReferences")]
     public GameObject muzzleFlashObj;
-    public ObjectReferences muzzleFlash;
     public Transform muzzleFlashSpawn;
 
     [Header("Audio")]
