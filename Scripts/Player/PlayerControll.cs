@@ -12,17 +12,13 @@ public class PlayerControll : NetworkBehaviour
     [SerializeField] private GameObject bulletSpawnP;
     [SerializeField] private GameObject playerCamera;
 
-    [Header("Animator")]
-    [SerializeField] private Animator animMesh;
-    [SerializeField] private Animator animArmS;
-    [SerializeField] private Animator animArmP;
-    [SerializeField] private TMP_Text healthText;
-
     [Header("Other")]
     [SerializeField] private Transform groundCheck;
-    [SerializeField] private Image bloodImage;
-    [SerializeField] private PlayerNetwork playerNetwork;
     [SerializeField] private LayerMask groundMask;
+
+    [Header("UI")]
+    [SerializeField] private Image bloodImage;
+    [SerializeField] private TMP_Text healthText;
 
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
@@ -31,8 +27,13 @@ public class PlayerControll : NetworkBehaviour
     public int playerHealth;
     public int kills;
 
+    private Animator animMesh;
+    private Animator animArmS;
+    private Animator animArmP;
+
     private WeaponController weaponControllerS;
     private WeaponController weaponControllerP;
+    private PlayerNetwork playerNetwork;
     private CharacterController characterController;
     private CapsuleCollider playerCollider;
 
@@ -51,13 +52,21 @@ public class PlayerControll : NetworkBehaviour
 
     private void Start()
     {
+        automaton.SetActive(true);
+        pistol.SetActive(true);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
         characterController = GetComponent<CharacterController>();
+        playerNetwork = GetComponent<PlayerNetwork>();
         playerCollider = GetComponent<CapsuleCollider>();
+        animMesh = GetComponent<Animator>();
         weaponControllerS = automaton.GetComponent<WeaponController>();
         weaponControllerP = pistol.GetComponent<WeaponController>();
+        animArmS = automaton.GetComponent<Animator>();
+        animArmP = pistol.GetComponent<Animator>();
+
+        pistol.SetActive(false);
     }
 
     private void Update()

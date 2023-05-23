@@ -6,8 +6,9 @@ public class ItemController : NetworkBehaviour
     [SerializeField] private bool isGrenade;
     [SerializeField] private bool isMedicalKit;
     [SerializeField] private bool isGasMask;
+    [SerializeField] private bool isGasMaskFilter;
 
-    public void Item(InventoryController inventoryController)
+    public void Item(InventoryController inventoryController, GasMaskController gasMaskController)
     {
         if(isGrenade)
         {
@@ -23,7 +24,13 @@ public class ItemController : NetworkBehaviour
 
         else if(isGasMask)
         {
-            inventoryController.medicalKitCount++;
+            gasMaskController.playerHaveGasMask = true;
+            CmdDestroyItem();
+        }
+
+        else if(isGasMaskFilter)
+        {
+            inventoryController.gasMaskFiltersCount++;
             CmdDestroyItem();
         }
     }

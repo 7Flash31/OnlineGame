@@ -4,37 +4,38 @@ using UnityEngine;
 public class RadiationController : MonoBehaviour
 {
     private Coroutine damagePlayerCoroutine;
-    private Coroutine damageFilterCoroutine;
+    //private Coroutine damageFilterCoroutine;
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.TryGetComponent<InventoryController>(out var inventoryController)
-            && other.TryGetComponent<GasMaskController>(out var gasMaskController)
-            && inventoryController.gasMaskFiltersCount > 0
-            && inventoryController.gasMaskCount > 0)
+        InventoryController inventoryController = other.gameObject.GetComponent<InventoryController>();
+        GasMaskController gasMaskController = other.gameObject.GetComponent<GasMaskController>();
+        PlayerControll playerControll = other.gameObject.GetComponent<PlayerControll>();
+
+        if(inventoryController.gasMaskFiltersCount > 0 && gasMaskController.playerHaveGasMask)
         {
             gasMaskController.FilterWork();
-
-            Debug.Log(2);
-
         }
 
         else
+        {
             if(damagePlayerCoroutine == null)
-                damagePlayerCoroutine = StartCoroutine(DamagePlayer());
+            {
+                damagePlayerCoroutine = StartCoroutine(DamagePlayer(playerControll));
+            }
+        }
+
+        if(!gasMaskController.filterReady && damagePlayerCoroutine == null)
+        {
+            damagePlayerCoroutine = StartCoroutine(DamagePlayer(playerControll));
+        }
     }
 
-    public IEnumerator DamagePlayer()
+    public IEnumerator DamagePlayer(PlayerControll playerControll)
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2f);
+
+        playerControll.playerHealth -= 5;
         damagePlayerCoroutine = null;
-    }
-
-    public IEnumerator DamageFilter(InventoryController inventoryController)
-    {
-        //inventoryController.gasMaskFiltersCount
-
-        yield return new WaitForSeconds(2);
-        damageFilterCoroutine = null;
     }
 }

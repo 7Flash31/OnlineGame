@@ -1,17 +1,25 @@
+using System.Collections;
 using UnityEngine;
 
 public class InventoryController : MonoBehaviour
 {
     [SerializeField] private GameObject playerCamera;
-    [SerializeField] private PlayerNetwork playerNetwork;
-    [SerializeField] private PlayerControll playerControll;
-    [SerializeField] private GasMaskController gasMaskController;
     [SerializeField] private float range;
 
     public int grenadeCount;
     public int medicalKitCount;
     public int gasMaskFiltersCount;
-    public int gasMaskCount;
+
+    private PlayerNetwork playerNetwork;
+    private PlayerControll playerControll;
+    private GasMaskController gasMaskController;
+
+    private void Start()
+    {
+        playerNetwork = GetComponent<PlayerNetwork>();
+        playerControll = GetComponent<PlayerControll>();
+        gasMaskController = GetComponent<GasMaskController>();
+    }
 
     private void Update()
     {
@@ -20,10 +28,6 @@ public class InventoryController : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.C) && medicalKitCount > 0 && playerControll.playerHealth < 100)
             UseMedicalKit();
-
-        if(gasMaskCount > 1)
-            gasMaskController.playerHaveGasMask = true;
-
     }
 
 
@@ -33,7 +37,7 @@ public class InventoryController : MonoBehaviour
 
         if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, range))
             if(hit.collider.TryGetComponent<ItemController>(out var itemController))
-                itemController.Item(this);
+                itemController.Item(this, gasMaskController);
     }
 
     private void UseMedicalKit()

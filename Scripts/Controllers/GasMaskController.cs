@@ -1,35 +1,129 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GasMaskController : MonoBehaviour
 {
-    [SerializeField] private InventoryController inventoryController;
+    [SerializeField] private Slider sliderFilter;
+    [SerializeField] private Slider sliderGasMask;
+    [SerializeField] private Slider sliderFilterTime;
+    [SerializeField] private Image imageBackFilterTime;
+    [SerializeField] private Image imageFilFilterTime;
+    [SerializeField] private GameObject meshGasMask;
+
 
     public float timeFilter; // 120
-    private float currentTimeFilter;
     public bool playerHaveGasMask;
+
+    public float currentTimeFilter;
+    public bool filterReady;
+    public bool gasMaskReady;
+
+    private Coroutine putGasMaskCoroutine;
+    private Coroutine changeFilterCoroutine;
+    private InventoryController inventoryController;
 
     private void Start()
     {
-        timeFilter = currentTimeFilter;
+        meshGasMask.SetActive(false);
+        sliderFilterTime.gameObject.SetActive(false);
+
+        sliderFilter.value = 0;
+        sliderGasMask.value = 0;
+        currentTimeFilter = timeFilter;
+        sliderFilterTime.value = currentTimeFilter;
+        sliderFilterTime.maxValue = currentTimeFilter;
+        inventoryController = GetComponent<InventoryController>();
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.V)
+            && playerHaveGasMask 
+            && putGasMaskCoroutine == null 
+            && !gasMaskReady)
+            putGasMaskCoroutine = StartCoroutine(PutGasMask());
+
+        if(Input.GetKeyDown(KeyCode.B)
+            && inventoryController.gasMaskFiltersCount > 0
+            && gasMaskReady
+            && changeFilterCoroutine == null 
+            && !filterReady)
+            changeFilterCoroutine = StartCoroutine(ChangeFilter());
+    }
 
     public void FilterWork()
     {
-        if(inventoryController.gasMaskFiltersCount > 0)
+        if(filterReady)
         {
-            if(timeFilter > 0)
+            if(currentTimeFilter > 0)
             {
-                timeFilter -= Time.deltaTime;
+                currentTimeFilter -= Time.deltaTime;
+                sliderFilterTime.value = currentTimeFilter;
+                if(sliderFilterTime.value < timeFilter / 2)
+                {
+                    imageBackFilterTime.color = Color.yellow;
+                    imageFilFilterTime.color= Color.yellow;
+                }
+
+                if(sliderFilterTime.value < timeFilter / 4)
+                {
+                    imageBackFilterTime.color = Color.red;
+                    imageFilFilterTime.color = Color.red;
+                }
             }
 
             else
             {
                 inventoryController.gasMaskFiltersCount--;
-                timeFilter = currentTimeFilter;
+                currentTimeFilter = timeFilter;
+                filterReady = false;
             }
         }
+    }
+
+    public IEnumerator PutGasMask()
+    {
+        sliderGasMask.gameObject.SetActive(true);
+        if(meshGasMask != null)
+            meshGasMask.SetActive(true);
+
+        for(float i = 1f; i <= 100; i += 1)
+        {
+            sliderGasMask.value += i;
+            yield return new WaitForSeconds(0.1f);
+            if(sliderGasMask.value == 100)
+            {
+                sliderGasMask.gameObject.SetActive(false);
+                break;
+            }
+        }
+
+        gasMaskReady = true;
+        putGasMaskCoroutine = null;
+        sliderGasMask.value = 0;
+        sliderFilterTime.gameObject.SetActive(true);
+        yield return null;
+    }
+
+    public IEnumerator ChangeFilter()
+    {
+        sliderFilter.gameObject.SetActive(true);
+
+        for(float i = 1f; i <= 100; i += 1)
+        {
+            sliderFilter.value += i;
+            yield return new WaitForSeconds(0.1f);
+            if(sliderFilter.value == 100)
+            {
+                sliderFilter.gameObject.SetActive(false);
+                break;
+            }
+        }
+
+        filterReady = true;
+        changeFilterCoroutine = null;
+        sliderFilter.value = 0;
+        yield return null;
     }
 }

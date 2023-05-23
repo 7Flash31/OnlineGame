@@ -6,8 +6,8 @@ public class GrenadeController : NetworkBehaviour
     [SerializeField] private Transform playerCamera;
     [SerializeField] private Transform attactPoint;
     [SerializeField] private GameObject grenade;
-    [SerializeField] private PlayerNetwork playerNetwork;
-    [SerializeField] private InventoryController inventoryController;
+    private PlayerNetwork playerNetwork;
+    private InventoryController inventoryController;
 
     [Header("Settings")]
     [SerializeField] private float throwCooldown;
@@ -22,6 +22,7 @@ public class GrenadeController : NetworkBehaviour
     {
         readyToTwow = true;
         inventoryController = GetComponent<InventoryController>();
+        playerNetwork = GetComponent<PlayerNetwork>();
     }
 
     private void Update()

@@ -4,12 +4,8 @@ using Mirror;
 
 public class PlayerNetwork : NetworkBehaviour
 {
-    [SerializeField] private PlayerControll playerControll;
-    [SerializeField] private Animator animMesh;
-
     [SerializeField] private WeaponController weaponControllerS;
     [SerializeField] private WeaponController weaponControllerP;
-    [SerializeField] private GrenadeController grenadeController;
     [SerializeField] private GameObject grenade;
 
     [SerializeField] private Component[] clientComp;
@@ -17,12 +13,19 @@ public class PlayerNetwork : NetworkBehaviour
     [SerializeField] private GameObject[] local;
     [SerializeField] private GameObject[] death;
 
-
     [SerializeField] private bool randomRespawn;
     [SerializeField] private bool pointRespawn;
 
+    private Animator animMesh;
+    private PlayerControll playerControll;
+    private GrenadeController grenadeController;
+
     private void Start()
     {
+        playerControll = GetComponent<PlayerControll>();
+        animMesh = GetComponent<Animator>();
+        grenadeController = GetComponent<GrenadeController>();
+
         if(!isLocalPlayer)
         {
             for(int i = 0; i < client.Length; i++)

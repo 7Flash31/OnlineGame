@@ -26,6 +26,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private float fireRate;
     [SerializeField] private float bulletForse;
     [SerializeField] private bool isPistol;
+    [SerializeField] private LayerMask ignoreBullet;
 
     [HideInInspector] public int maxAmmo;
     [HideInInspector] public int currentAmmo;
@@ -85,7 +86,7 @@ public class WeaponController : MonoBehaviour
         armAnimator.Play("Fire");
         RaycastHit hit;
 
-        if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, range))
+        if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, range, ignoreBullet))
         {
             string hitObject = "Concrete";
             //Transform parent = hit.collider.transform;
