@@ -12,22 +12,25 @@ public class RadiationController : MonoBehaviour
         GasMaskController gasMaskController = other.gameObject.GetComponent<GasMaskController>();
         PlayerControll playerControll = other.gameObject.GetComponent<PlayerControll>();
 
-        if(inventoryController.gasMaskFiltersCount > 0 && gasMaskController.playerHaveGasMask)
+        if (inventoryController != null && gasMaskController != null)
         {
-            gasMaskController.FilterWork();
-        }
+            if(inventoryController.gasMaskFiltersCount > 0 && gasMaskController.playerHaveGasMask)
+            {
+                gasMaskController.FilterWork();
+            }
 
-        else
-        {
-            if(damagePlayerCoroutine == null)
+            else
+            {
+                if(damagePlayerCoroutine == null)
+                {
+                    damagePlayerCoroutine = StartCoroutine(DamagePlayer(playerControll));
+                }
+            }
+
+            if(!gasMaskController.filterReady && damagePlayerCoroutine == null)
             {
                 damagePlayerCoroutine = StartCoroutine(DamagePlayer(playerControll));
             }
-        }
-
-        if(!gasMaskController.filterReady && damagePlayerCoroutine == null)
-        {
-            damagePlayerCoroutine = StartCoroutine(DamagePlayer(playerControll));
         }
     }
 
@@ -35,7 +38,8 @@ public class RadiationController : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
-        playerControll.playerHealth -= 5;
+        if(playerControll != null) 
+            playerControll.playerHealth -= 5;
         damagePlayerCoroutine = null;
     }
 }

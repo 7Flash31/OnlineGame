@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 959542854279009610}
   - component: {fileID: 6725736927350977548}
   - component: {fileID: 6368816799555749790}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SM_GAS_CYLINDER_01
   m_TagString: GasCylinder
   m_Icon: {fileID: 0}

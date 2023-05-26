@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
 using TMPro;
+using System.Threading;
 
 public class PlayerControll : NetworkBehaviour
 {
@@ -14,7 +15,11 @@ public class PlayerControll : NetworkBehaviour
 
     [Header("Other")]
     [SerializeField] private Transform groundCheck;
+    [SerializeField] private Transform targetCamera;
+    [SerializeField] private Transform target;
     [SerializeField] private LayerMask groundMask;
+    [SerializeField] private Vector3 cameraPos;
+    [SerializeField] private Vector3 cameraPosSit;
 
     [Header("UI")]
     [SerializeField] private Image bloodImage;
@@ -43,6 +48,7 @@ public class PlayerControll : NetworkBehaviour
     private Vector3 velocity;
 
     private float currentSpeed;
+    private float mouse;
 
     private float h;
     private float v;
@@ -65,7 +71,6 @@ public class PlayerControll : NetworkBehaviour
         weaponControllerP = pistol.GetComponent<WeaponController>();
         animArmS = automaton.GetComponent<Animator>();
         animArmP = pistol.GetComponent<Animator>();
-
         pistol.SetActive(false);
     }
 
@@ -79,6 +84,7 @@ public class PlayerControll : NetworkBehaviour
         if(playerHealth <= 0)
             playerNetwork.CmdRespawn();
 
+        CmdSendPosition(targetCamera.position);
 
         ChangeWeapon();
         HandleMovement();
@@ -142,12 +148,14 @@ public class PlayerControll : NetworkBehaviour
 
     private void HandleMovement()
     {
+        float mouseX = Input.GetAxis("Mouse X");
+        mouse = Mathf.Lerp(mouse, mouseX, 10 * Time.deltaTime);
+        animMesh.SetFloat("MouseX", mouse);
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDictsnse, groundMask);
 
         if(isGrounded && velocity.y < 0)
-        {
             velocity.y = -2f;
-        }
 
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
@@ -198,12 +206,11 @@ public class PlayerControll : NetworkBehaviour
         if(Input.GetKey(KeyCode.LeftControl))
         {
             animMesh.SetBool("IsCrouching", true);
-            characterController.height = 1.3f;
-            characterController.center = new Vector3(0, -0.3f, 0);
-            playerCollider.height = 1.3f;
-            playerCollider.center = new Vector3(0, -0.3f, 0);
-            playerCamera.transform.localPosition = new Vector3(0, 0.134f, 0);
-            Debug.Log(1);
+            characterController.height = 1.17f;
+            characterController.center = new Vector3(0, -0.36f, 0);
+            playerCollider.height = 1.17f;
+            playerCollider.center = new Vector3(0, -0.36f, 0);
+            playerCamera.transform.localPosition = cameraPosSit;
         }
 
         else
@@ -213,10 +220,8 @@ public class PlayerControll : NetworkBehaviour
             characterController.center = new Vector3(0, -0.2f, 0);
             playerCollider.height = 1.5f;
             playerCollider.center = new Vector3(0, -0.2f, 0);
-            playerCamera.transform.localPosition = new Vector3(0, 0.4f, 0);
+            playerCamera.transform.localPosition = cameraPos;
         }
-
-
     }
 
     private void Run()
@@ -246,6 +251,21 @@ public class PlayerControll : NetworkBehaviour
         }
 
         currentSpeed = Mathf.Lerp(currentSpeed, walkSpeed, Time.deltaTime * 3);
+    }
+
+    [Command]
+    private void CmdSendPosition(Vector3 position)
+    {
+        RpcUpdatePosition(position);
+    }
+
+    [ClientRpc]
+    private void RpcUpdatePosition(Vector3 position)
+    {
+        if(target != null || position != null)
+        {
+            target.position = position;
+        }
     }
 
 

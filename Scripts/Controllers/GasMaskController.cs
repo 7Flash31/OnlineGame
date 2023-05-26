@@ -63,7 +63,7 @@ public class GasMaskController : MonoBehaviour
                 if(sliderFilterTime.value < timeFilter / 2)
                 {
                     imageBackFilterTime.color = Color.yellow;
-                    imageFilFilterTime.color= Color.yellow;
+                    imageFilFilterTime.color = Color.yellow;
                 }
 
                 if(sliderFilterTime.value < timeFilter / 4)
@@ -76,7 +76,6 @@ public class GasMaskController : MonoBehaviour
             else
             {
                 inventoryController.gasMaskFiltersCount--;
-                currentTimeFilter = timeFilter;
                 filterReady = false;
             }
         }
@@ -103,6 +102,20 @@ public class GasMaskController : MonoBehaviour
         putGasMaskCoroutine = null;
         sliderGasMask.value = 0;
         sliderFilterTime.gameObject.SetActive(true);
+        sliderFilterTime.value = 0;
+
+        if(sliderFilterTime.value < timeFilter / 2)
+        {
+            imageBackFilterTime.color = Color.yellow;
+            imageFilFilterTime.color = Color.yellow;
+        }
+
+        if(sliderFilterTime.value < timeFilter / 4)
+        {
+            imageBackFilterTime.color = Color.red;
+            imageFilFilterTime.color = Color.red;
+        }
+
         yield return null;
     }
 
@@ -120,10 +133,15 @@ public class GasMaskController : MonoBehaviour
                 break;
             }
         }
-
+        currentTimeFilter = timeFilter;
+        sliderFilterTime.value = currentTimeFilter;
         filterReady = true;
         changeFilterCoroutine = null;
         sliderFilter.value = 0;
+
+        imageBackFilterTime.color = Color.white;
+        imageFilFilterTime.color = Color.white;
+
         yield return null;
     }
 }

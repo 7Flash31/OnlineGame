@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6121152372617382401}
   - component: {fileID: 8292891558143262411}
   - component: {fileID: 1922958866548238354}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RadiationSign
   m_TagString: Untagged
   m_Icon: {fileID: 0}

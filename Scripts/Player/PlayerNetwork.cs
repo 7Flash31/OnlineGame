@@ -9,6 +9,7 @@ public class PlayerNetwork : NetworkBehaviour
     [SerializeField] private GameObject grenade;
 
     [SerializeField] private Component[] clientComp;
+    [SerializeField] private Component[] localComp;
     [SerializeField] private GameObject[] client;
     [SerializeField] private GameObject[] local;
     [SerializeField] private GameObject[] death;
@@ -42,7 +43,11 @@ public class PlayerNetwork : NetworkBehaviour
         {
             for(int i = 0; i < local.Length; i++)
             {
-                Destroy(local[i]);
+                local[i].SetActive(false);
+            }
+            for(int i = 0; i < localComp.Length; i++)
+            {
+                Destroy(localComp[i]);
             }
         }
     }

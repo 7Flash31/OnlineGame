@@ -5,6 +5,7 @@ public class InventoryController : MonoBehaviour
 {
     [SerializeField] private GameObject playerCamera;
     [SerializeField] private float range;
+    [SerializeField] private LayerMask ignoreBullet;
 
     public int grenadeCount;
     public int medicalKitCount;
@@ -23,6 +24,8 @@ public class InventoryController : MonoBehaviour
 
     private void Update()
     {
+        Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * range, Color.red);
+
         if(Input.GetKeyDown(KeyCode.E))
             TakeItem();
 
@@ -35,7 +38,7 @@ public class InventoryController : MonoBehaviour
     {
         RaycastHit hit;
 
-        if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, range))
+        if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, range, ignoreBullet))
             if(hit.collider.TryGetComponent<ItemController>(out var itemController))
                 itemController.Item(this, gasMaskController);
     }

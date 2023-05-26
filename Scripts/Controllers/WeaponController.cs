@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using Unity.Burst.CompilerServices;
 
 public class WeaponController : MonoBehaviour
 {
@@ -43,6 +44,9 @@ public class WeaponController : MonoBehaviour
     private void Update()
     {        
         ammoText.text = currentAmmo + "/" + maxAmmo;
+        Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * range, Color.yellow);
+
+        
 
         if(currentAmmo > 0)
             isCanShoot = true;
