@@ -1,42 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WheelController : MonoBehaviour {
 
     [SerializeField] private WheelAlignment[] steerableWheels;
-
     [SerializeField] private float BreakPower;
-
-    [SerializeField] private float Horizontal;
-    [SerializeField] private float Vertical;
-    //Steering variables
     [SerializeField] private float wheelRotateSpeed;
     [SerializeField] private float wheelSteeringAngle;
-
-    //Motor variables
     [SerializeField] private float wheelAcceleration;
     [SerializeField] private float wheelMaxSpeed;
 
     [SerializeField] private bool playerInCar;
+    [SerializeField] private float playerRange;
+    [SerializeField] private LayerMask playerLayer;
 
     [SerializeField] private Rigidbody RB;
 
-    // Update is called once per frame
+    private float Horizontal;
+    private float Vertical;
+
+
     void Update ()
     {
-        //Physics.CheckSphere
-
-        if(!playerInCar)
-            return;
-
         wheelControl();      
 	}
 
+    public void OnPlayerSitCar()
+    {
+        playerInCar = true;
+    }
 
-    //Applies steering and motor torque
     void wheelControl()
     {
+        if(!playerInCar)
+            return;
+
         for (int i = 0; i < steerableWheels.Length; i++)
         {
             //Sets default steering angle

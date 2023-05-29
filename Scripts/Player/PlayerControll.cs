@@ -85,6 +85,7 @@ public class PlayerControll : NetworkBehaviour
             playerNetwork.CmdRespawn();
 
         SitCar();
+
         if(!isServer)
             CmdSendPosition(targetCamera.position);
         ChangeWeapon();
@@ -92,28 +93,30 @@ public class PlayerControll : NetworkBehaviour
         UseKey();
     }
 
+
+
     private void SitCar()
     {
         RaycastHit hit;
-        if(Input.GetKeyDown(KeyCode.E))
-            if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, range))
-                if(hit.collider.TryGetComponent<WheelController>(out var wheelController))
-                {
-                    wheelController.enabled = true;
-                    CmdSitCar();
-                }
+
+        if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, range))
+            if(hit.collider.TryGetComponent<WheelController>(out var wheelController))
+            {
+                wheelController.OnPlayerSitCar();
+                CmdSitCar();
+            }
     }
 
     [Command(requiresAuthority = false)] //OtherScript
     private void CmdSitCar()
     {
-        RpcitCar();
+        RpcSitCar();
     }
 
     [ClientRpc]
-    private void RpcitCar()
+    private void RpcSitCar()
     {
-
+        NetworkServer.Destroy(gameObject);
     }
 
     private void ChangeWeapon()
