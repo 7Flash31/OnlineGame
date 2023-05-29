@@ -39,15 +39,15 @@ public class GasMaskController : MonoBehaviour
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.V)
-            && playerHaveGasMask 
-            && putGasMaskCoroutine == null 
+            && playerHaveGasMask
+            && putGasMaskCoroutine == null
             && !gasMaskReady)
             putGasMaskCoroutine = StartCoroutine(PutGasMask());
 
         if(Input.GetKeyDown(KeyCode.B)
             && inventoryController.gasMaskFiltersCount > 0
             && gasMaskReady
-            && changeFilterCoroutine == null 
+            && changeFilterCoroutine == null
             && !filterReady)
             changeFilterCoroutine = StartCoroutine(ChangeFilter());
     }

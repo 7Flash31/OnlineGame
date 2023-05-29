@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectReferences : MonoBehaviour
@@ -23,8 +21,8 @@ public class ObjectReferences : MonoBehaviour
     private void Awake()
     {
         if(instance == null)
-        { 
-            instance = this; 
+        {
+            instance = this;
         }
         else if(instance == this)
         {

@@ -1,7 +1,6 @@
 using System.Collections;
-using UnityEngine;
 using TMPro;
-using Unity.Burst.CompilerServices;
+using UnityEngine;
 
 public class WeaponController : MonoBehaviour
 {
@@ -42,11 +41,11 @@ public class WeaponController : MonoBehaviour
     }
 
     private void Update()
-    {        
+    {
         ammoText.text = currentAmmo + "/" + maxAmmo;
         Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * range, Color.yellow);
 
-        
+
 
         if(currentAmmo > 0)
             isCanShoot = true;
@@ -62,7 +61,7 @@ public class WeaponController : MonoBehaviour
             StartCoroutine(Reload());
         }
 
-        if(Input.GetKey(KeyCode.Mouse0) && Time.time > nextFire && isCanShoot && !isReload && !isPistol) 
+        if(Input.GetKey(KeyCode.Mouse0) && Time.time > nextFire && isCanShoot && !isReload && !isPistol)
         {
             currentAmmo--;
             nextFire = Time.time + 1f / fireRate;
@@ -105,12 +104,12 @@ public class WeaponController : MonoBehaviour
             {
                 hitPlayerNetwork.DamagePlayer(damage);
                 hitObject = "Player";
-            } 
+            }
 
             if(hit.transform.gameObject.tag == "GasCylinder" && hit.collider.TryGetComponent<ExplosionController>(out var explosionController))
             {
                 explosionController.isCanExplosion = true;
-            } 
+            }
 
             if(hit.transform.gameObject.tag == "Concrete")
                 hitObject = "Concrete";
@@ -131,7 +130,7 @@ public class WeaponController : MonoBehaviour
             //playerNetwork.CmdSetMuzzle(muzzleFlashSpawn.transform.position, Quaternion.identity, muzzleFlashSpawn.transform);
         }
     }
-     
+
     private IEnumerator Reload()
     {
         isReload = true;

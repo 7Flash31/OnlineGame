@@ -1,29 +1,29 @@
-using UnityEngine;
-using UnityEngine.UI;
 using Mirror;
 using TMPro;
-using System.Threading;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerControll : NetworkBehaviour
 {
     [Header("Weapon")]
-    [SerializeField] private GameObject automaton; 
+    [SerializeField] private GameObject automaton;
     [SerializeField] private GameObject pistol;
     [SerializeField] private GameObject bulletSpawnS;
     [SerializeField] private GameObject bulletSpawnP;
-    [SerializeField] private GameObject playerCamera;
+    [SerializeField] private GameObject playerCamera; //Cinemachine
 
     [Header("Other")]
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform targetCamera;
-    [SerializeField] private Transform target;
+    [SerializeField] private Transform target; //Cinemachine
+    [SerializeField] private float range; //OtherScript
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private Vector3 cameraPos;
     [SerializeField] private Vector3 cameraPosSit;
 
     [Header("UI")]
-    [SerializeField] private Image bloodImage;
-    [SerializeField] private TMP_Text healthText;
+    [SerializeField] private Image bloodImage; //Canvas
+    [SerializeField] private TMP_Text healthText; //Canvas
 
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
@@ -38,9 +38,9 @@ public class PlayerControll : NetworkBehaviour
 
     private WeaponController weaponControllerS;
     private WeaponController weaponControllerP;
-    private PlayerNetwork playerNetwork;
-    private CharacterController characterController;
-    private CapsuleCollider playerCollider;
+    private PlayerNetwork playerNetwork; 
+    private CharacterController characterController; 
+    private CapsuleCollider playerCollider; //Cinemachine
 
     private float groundDictsnse = 0.4f;
     private float gravitry = -19.62f;
@@ -84,11 +84,36 @@ public class PlayerControll : NetworkBehaviour
         if(playerHealth <= 0)
             playerNetwork.CmdRespawn();
 
-        CmdSendPosition(targetCamera.position);
-
+        SitCar();
+        if(!isServer)
+            CmdSendPosition(targetCamera.position);
         ChangeWeapon();
         HandleMovement();
         UseKey();
+    }
+
+    private void SitCar()
+    {
+        RaycastHit hit;
+        if(Input.GetKeyDown(KeyCode.E))
+            if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, range))
+                if(hit.collider.TryGetComponent<WheelController>(out var wheelController))
+                {
+                    wheelController.enabled = true;
+                    CmdSitCar();
+                }
+    }
+
+    [Command(requiresAuthority = false)] //OtherScript
+    private void CmdSitCar()
+    {
+        RpcitCar();
+    }
+
+    [ClientRpc]
+    private void RpcitCar()
+    {
+
     }
 
     private void ChangeWeapon()

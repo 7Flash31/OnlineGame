@@ -1,6 +1,6 @@
+using Mirror;
 using System.Collections;
 using UnityEngine;
-using Mirror;
 
 public class PlayerNetwork : NetworkBehaviour
 {
@@ -13,6 +13,7 @@ public class PlayerNetwork : NetworkBehaviour
     [SerializeField] private GameObject[] client;
     [SerializeField] private GameObject[] local;
     [SerializeField] private GameObject[] death;
+    [SerializeField] private GameObject mesh;
 
     [SerializeField] private bool randomRespawn;
     [SerializeField] private bool pointRespawn;
@@ -58,7 +59,7 @@ public class PlayerNetwork : NetworkBehaviour
             return;
         animMesh.Play("hit reaction");
         int health = playerControll.playerHealth;
-        health -= damage; 
+        health -= damage;
         if(health <= 0)
             KillCount();
         CmdHealth(damage);
@@ -126,6 +127,11 @@ public class PlayerNetwork : NetworkBehaviour
                 death[i].SetActive(false);
         }
 
+        if(!isLocalPlayer)
+        {
+            mesh.SetActive(false);
+        }
+
         playerControll.playerHealth = 100;
         weaponControllerS.currentAmmo = weaponControllerS.maxAmmo;
         weaponControllerP.currentAmmo = weaponControllerP.maxAmmo;
@@ -138,6 +144,10 @@ public class PlayerNetwork : NetworkBehaviour
         {
             if(death[i] != null)
                 death[i].SetActive(true);
+        }
+        if(!isLocalPlayer)
+        {
+            mesh.SetActive(true);
         }
     }
 

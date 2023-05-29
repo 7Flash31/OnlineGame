@@ -12,7 +12,7 @@ public class RadiationController : MonoBehaviour
         GasMaskController gasMaskController = other.gameObject.GetComponent<GasMaskController>();
         PlayerControll playerControll = other.gameObject.GetComponent<PlayerControll>();
 
-        if (inventoryController != null && gasMaskController != null)
+        if(inventoryController != null && gasMaskController != null)
         {
             if(inventoryController.gasMaskFiltersCount > 0 && gasMaskController.playerHaveGasMask)
             {
@@ -38,7 +38,7 @@ public class RadiationController : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
-        if(playerControll != null) 
+        if(playerControll != null)
             playerControll.playerHealth -= 5;
         damagePlayerCoroutine = null;
     }
